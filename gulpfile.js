@@ -114,6 +114,8 @@ gulp.task("js-examples", function() {
       debug: true
     });
 
+    bundler.transform('jadeify')
+
     return bundler.bundle()
       .pipe(source('bundle.js'))
       .pipe(gulp.dest(path.join(paths.dist.examplesDir, dir)));
@@ -142,6 +144,8 @@ gulp.task('watch-examples', ['examples'], function () {
       fullPaths: true,
       debug: true
     }));
+
+    bundler.transform('jadeify')
 
     bundler.on("update", rebundle);
 
