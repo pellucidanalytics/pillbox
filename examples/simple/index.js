@@ -20,5 +20,10 @@ var tags = [{
 }];
 
 _.each(tags, function (tag) {
-  simpleRibbon.addTag(tag);
+  simpleRibbon.addTag(_.extend(tag, { remove: true }));
+});
+
+simpleRibbon.on('tag:request:remove', function (tag) {
+  console.log('The following tag requested removal:', tag.value);
+  simpleRibbon.removeTag(tag.name);
 });
