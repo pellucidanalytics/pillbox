@@ -1,17 +1,17 @@
 var _ =  require('lodash');
-var Pills = require('../..');
-var tmpl = require('./tag.jade');
+var Pillbox = require('../..');
+var tmpl = require('./pill.jade');
 
-var tags = ['Fruit', 'Vegetable', 'Grain', 'Dairy'];
+var values = ['Fruit', 'Vegetable', 'Grain', 'Dairy'];
 
-var simpleRibbon = new Pills.Ribbon({
+var simpleRibbon = new Pillbox({
   container: document.querySelector('.tag-ribbon')
 });
 
-_.each(tags, function (tag) {
-  simpleRibbon.addTag({
-    value: tag,
-    name: tag.toLowerCase(),
+_.each(values, function (value) {
+  simpleRibbon.addPill({
+    value: value,
+    name: value.toLowerCase(),
     template: tmpl
   });
 });

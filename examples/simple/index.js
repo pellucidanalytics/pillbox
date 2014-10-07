@@ -1,32 +1,32 @@
 var _ =  require('lodash');
-var Pills = require('../..');
+var Pillbox = require('../..');
 
-var simpleRibbon = new Pills.Ribbon({
+var simpleBox = new Pillbox({
   container: document.getElementById('tag-ribbon')
 });
 
-var tagNames = ['Roots', 'Seeds', 'Drupes'];
+var values = ['Roots', 'Seeds', 'Drupes'];
 
-_.each(tagNames, function (tag) {
-  simpleRibbon.addTag({
-    name: tag.toLowerCase(),
-    value: tag,
+_.each(values, function (value) {
+  simpleBox.addPill({
+    name: value.toLowerCase(),
+    value: value,
     states: ['pill','inactive'],
     remove: true
   });
 });
 
-simpleRibbon.on('tag:request:remove', function (tag) {
-  console.log('The following tag requested removal:', tag.value);
-  simpleRibbon.removeTag(tag.name);
+simpleBox.on('pill:request:remove', function (pill) {
+  console.log('The following pill requested removal:', pill.value);
+  simpleBox.removeTag(pill.name);
 });
 
-simpleRibbon.on('tag:click', function (tag) {
-  if (tag.hasState('active')) {
-    tag.removeState('active');
-    tag.setState('inactive');
+simpleBox.on('pill:click', function (pill) {
+  if (pill.hasState('active')) {
+    pill.removeState('active');
+    pill.setState('inactive');
   } else {
-    tag.setState('active');
-    tag.removeState('inactive')
+    pill.setState('active');
+    pill.removeState('inactive')
   }
 });
