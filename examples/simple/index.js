@@ -5,22 +5,15 @@ var simpleRibbon = new Pills.Ribbon({
   container: document.getElementById('tag-ribbon')
 });
 
-var tags = [{
-  name: 'root-vegetables',
-  value: 'Roots',
-  states: ['tag-enabled']
-}, {
-  name: 'seeds',
-  value: 'Seeds',
-  states: ['tag-enabled']
-}, {
-  name: 'drupe-fruits',
-  value: 'Drupes',
-  states: ['tag-enabled']
-}];
+var tagNames = ['Roots', 'Seeds', 'Drupes'];
 
-_.each(tags, function (tag) {
-  simpleRibbon.addTag(_.extend(tag, { remove: true }));
+_.each(tagNames, function (tag) {
+  simpleRibbon.addTag({
+    name: tag.toLowerCase(),
+    value: tag,
+    states: ['pill','inactive'],
+    remove: true
+  });
 });
 
 simpleRibbon.on('tag:request:remove', function (tag) {
@@ -29,9 +22,11 @@ simpleRibbon.on('tag:request:remove', function (tag) {
 });
 
 simpleRibbon.on('tag:click', function (tag) {
-  if (tag.hasState('selected')) {
-    tag.removeState('selected');
+  if (tag.hasState('active')) {
+    tag.removeState('active');
+    tag.setState('inactive');
   } else {
-    tag.setState('selected');
+    tag.setState('active');
+    tag.removeState('inactive')
   }
 });
