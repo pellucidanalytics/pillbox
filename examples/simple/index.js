@@ -27,3 +27,7 @@ simpleRibbon.on('tag:request:remove', function (tag) {
   console.log('The following tag requested removal:', tag.value);
   simpleRibbon.removeTag(tag.name);
 });
+
+simpleRibbon.on('tag:click', function (tag) {
+  console.log('The following tag was clicked:', tag.value);
+});
