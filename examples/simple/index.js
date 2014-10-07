@@ -29,5 +29,9 @@ simpleRibbon.on('tag:request:remove', function (tag) {
 });
 
 simpleRibbon.on('tag:click', function (tag) {
-  console.log('The following tag was clicked:', tag.value);
+  if (tag.hasState('selected')) {
+    tag.removeState('selected');
+  } else {
+    tag.setState('selected');
+  }
 });
