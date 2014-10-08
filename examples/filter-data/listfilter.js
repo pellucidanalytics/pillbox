@@ -33,7 +33,17 @@ _.extend(ListFilter.prototype, {
   showItem: function (key) {
     this.items[key].el.style.display = 'block';
   },
+  showAll: function () {
+    _.each(this.items, function (item, key) {
+      this.showItem(key);
+    }, this);
+  },
   filterByTags: function (tags) {
+    // show all tags if none are selected
+    if (!tags.length) {
+      this.showAll();
+      return;
+    }
     _.each(this.items, function (item, key) {
       if (_.isEmpty(_.intersection(item.tags, tags))) {
         // hide the item if none of its tags match the given tags
