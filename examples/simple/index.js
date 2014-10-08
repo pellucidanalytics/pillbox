@@ -18,7 +18,7 @@ _.each(values, function (value) {
 
 simpleBox.on('pill:request:remove', function (pill) {
   console.log('The following pill requested removal:', pill.value);
-  simpleBox.removeTag(pill.name);
+  simpleBox.removePill(pill.name);
 });
 
 simpleBox.on('pill:click', function (pill) {
