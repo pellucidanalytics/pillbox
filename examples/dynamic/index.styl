@@ -1,0 +1,65 @@
+body
+  font-family sans-serif
+
+#tag-adder
+  border 1px solid #ddd
+  display block
+  font-size 14px
+  margin 40px auto 20px
+  padding 8px
+  width 414px
+
+  &:focus,
+  &:active
+    border-color #a3a
+    outline 0
+
+#tag-ribbon
+  background #f4f4f4
+  margin 20px auto
+  padding 15px 15px 0
+  width 400px
+
+.pill-tag
+  background #fff
+  border 1px solid #ddd
+  border-radius 15px
+  cursor pointer
+  display inline-block
+  font-size 14px
+  margin-right 12px
+  margin-bottom 15px
+  padding 5px 8px
+  transition 300ms
+
+  &:hover
+    border-color #bada55
+    background lighten(#bada55, 95%)
+
+  &.active
+    border-color #0ad
+    background lighten(#0ad, 95%)
+
+.pill-tag-remove
+  background #ccc
+  border 0
+  border-radius 50%
+  color #fff
+  cursor pointer
+  display inline-block
+  font-size 9px
+  height 14px
+  line-height 14px
+  margin-left 8px
+  padding 0
+  text-align center
+  transition 150ms
+  vertical-align middle
+  width 14px
+
+  &:hover
+    background #aaa
+
+  &:focus,
+  &:active
+    outline none
