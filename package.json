@@ -1,7 +1,7 @@
 {
   "name": "pills",
   "version": "0.0.0",
-  "description": "Small library for creting ribbons of tags.",
+  "description": "Small library for creating lists of tags in containers.",
   "main": "index.js",
   "scripts": {
     "build": "npm install && gulp",
