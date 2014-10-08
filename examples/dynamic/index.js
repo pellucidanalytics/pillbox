@@ -4,7 +4,9 @@ var Pillbox = require('../..');
 var tmpl = require('./pill.jade');
 
 var box = new Pillbox({
-  container: document.getElementById('tag-ribbon')
+  container: document.getElementById('tag-ribbon'),
+  collapsedHeight: 58,
+  expandedHeight: 120
 });
 
 document.getElementById('tag-adder').onkeyup = function (e) {

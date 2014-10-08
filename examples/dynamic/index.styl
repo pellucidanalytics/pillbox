@@ -16,9 +16,16 @@ body
 
 #tag-ribbon
   background #f4f4f4
+  box-sizing border-box
   margin 20px auto
   padding 15px 15px 0
   width 400px
+
+  &.is-collapsed
+    overflow hidden
+
+  &.is-expanded
+    overflow-y auto
 
 .pill-tag
   background #fff
