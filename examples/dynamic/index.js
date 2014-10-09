@@ -2,11 +2,11 @@ var _ =  require('lodash');
 var Pillbox = require('../..');
 
 var tmpl = require('./pill.jade');
+var container = document.querySelector('.tag-ribbon > ul');
+var toggler = document.querySelector('.pillbox-toggle');
 
 var box = new Pillbox({
-  container: document.getElementById('tag-ribbon'),
-  collapsedHeight: 58,
-  expandedHeight: 120
+  container: container
 });
 
 document.getElementById('tag-adder').onkeyup = function (e) {
@@ -22,6 +22,35 @@ document.getElementById('tag-adder').onkeyup = function (e) {
     e.target.value = "";
   }
 };
+
+var containerIsExpanded = false;
+
+toggler.onclick = function () {
+  if (containerIsExpanded) {
+    // if container is expanded, collapse
+    container.classList.remove('is-expanded');
+    container.classList.add('is-collapsed');
+    toggler.querySelector('.fa').classList.remove('fa-rotate-180');
+    containerIsExpanded = false;
+  } else if (container.scrollHeight > container.offsetHeight) {
+    // otherwise, if container is overflowed, expand
+    container.classList.remove('is-collapsed');
+    container.classList.add('is-expanded');
+    toggler.querySelector('.fa').classList.add('fa-rotate-180');
+    containerIsExpanded = true;
+  }
+};
+
+function checkButtonState() {
+  if (containerIsExpanded || container.scrollHeight > container.offsetHeight) {
+    toggler.classList.remove('disabled');
+  } else {
+    toggler.classList.add('disabled');
+  }
+}
+
+box.on('pill:add', function () { checkButtonState(); });
+box.on('pill:remove', function () { checkButtonState(); });
 
 box.on('pill:request:remove', function (pill) {
   box.removePill(pill.name);

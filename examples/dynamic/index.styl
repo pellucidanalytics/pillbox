@@ -7,25 +7,63 @@ body
   font-size 14px
   margin 40px auto 20px
   padding 8px
-  width 414px
+  width 434px
 
   &:focus,
   &:active
     border-color #a3a
     outline 0
 
-#tag-ribbon
+.tag-ribbon
   background #f4f4f4
-  box-sizing border-box
   margin 20px auto
-  padding 15px 15px 0
+  padding 15px 35px 0 15px
+  position relative
   width 400px
 
+.tag-ribbon ul
+  list-style none
+  margin 0
+  padding 0
+  transition height 240ms
+
   &.is-collapsed
+    height 45px
     overflow hidden
 
   &.is-expanded
-    overflow-y auto
+    height 90px
+    overflow-y hidden
+
+.pillbox-toggle
+  background #0ad
+  border 1px solid #0ad
+  border-radius 5px
+  bottom 18px
+  color #fff
+  cursor pointer
+  font-size 18px
+  line-height 18px
+  position absolute
+  right 10px
+
+  &:hover
+    background lighten(#0ad, 5%)
+
+  &:focus
+    outline none
+
+  &:active
+    background darken(#0ad, 15%)
+    outline none
+
+  &.disabled
+    background transparent
+    border-color #ccc
+    color #ccc
+
+  .fa
+    transition 240ms
 
 .pill-tag
   background #fff
@@ -34,6 +72,7 @@ body
   cursor pointer
   display inline-block
   font-size 14px
+  line-height 18px
   margin-right 12px
   margin-bottom 15px
   padding 5px 8px
