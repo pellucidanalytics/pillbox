@@ -18,8 +18,8 @@ var myPills = new Pillbox({
 
 _.each(tags, function (value) {
   myPills.addPill({
+    key: value.toLowerCase(),
     value: value,
-    name: value.toLowerCase(),
     template: tmpl
   });
 });

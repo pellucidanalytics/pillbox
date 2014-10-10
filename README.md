@@ -27,7 +27,7 @@ The `Pillbox` variable above is a constructor that takes an object with the foll
 
 Pills are created with the following options:
 
- - `name` -- String, used as a key to identify the pill, must be unique
+ - `key` -- String, used to identify the pill, must be unique
  - `value` -- String that will be displayed on the rendered pill
  - `remove` -- Optional boolean, determines if pills should have close buttons when no template is present.
  - `template` -- An optional function, should return a string of HTML given an object parameter with a `value` property.
@@ -48,7 +48,7 @@ You don't have to add pills initially, though. You can easily add them after cre
 
 ```javascript
 pb.addPill({
-    name: 'roots',
+    key: 'roots',
     value: 'Root Vegetables',
     template: require('tag.jade'),
     states: ['disabled']
@@ -57,7 +57,7 @@ pb.addPill({
 
 #### removePill( key )
 
-You can also remove a pill if you know its `name`:
+You can also remove a pill if you know its `key`:
 
 ```javascript
 pb.removePill('roots');
@@ -121,7 +121,7 @@ You can instead listen for the event on `pb` directly, which is more concise:
 
 ```javascript
 pb.on('pill:request:remove', function (pill) {
-  pb.removePill(pill.name);
+  pb.removePill(pill.key);
 });
 ```
 

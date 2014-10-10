@@ -9,7 +9,7 @@ var values = ['Roots', 'Seeds', 'Drupes'];
 
 _.each(values, function (value) {
   simpleBox.addPill({
-    name: value.toLowerCase(),
+    key: value.toLowerCase(),
     value: value,
     states: ['pill','inactive'],
     remove: true
@@ -18,7 +18,7 @@ _.each(values, function (value) {
 
 simpleBox.on('pill:request:remove', function (pill) {
   console.log('The following pill requested removal:', pill.value);
-  simpleBox.removePill(pill.name);
+  simpleBox.removePill(pill.key);
 });
 
 simpleBox.on('pill:click', function (pill) {

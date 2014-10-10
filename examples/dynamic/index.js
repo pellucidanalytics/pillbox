@@ -20,7 +20,7 @@ document.getElementById('tag-adder').onkeydown = function (e) {
   // when enter key is pressed, add a new pill
   if (e.key === "Enter" || e.keyCode === 13 || e.which === 13) {
     box.addPill({
-      name: target.value,
+      key: target.value,
       value: target.value,
       template: tmpl
     });
@@ -61,7 +61,7 @@ box.on('pill:add', function () { checkButtonState(); });
 box.on('pill:remove', function () { checkButtonState(); });
 
 box.on('pill:request:remove', function (pill) {
-  box.removePill(pill.name);
+  box.removePill(pill.key);
 });
 
 box.on('pill:click', function (pill) {

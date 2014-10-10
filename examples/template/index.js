@@ -11,7 +11,7 @@ var simpleRibbon = new Pillbox({
 _.each(values, function (value) {
   simpleRibbon.addPill({
     value: value,
-    name: value.toLowerCase(),
+    key: value.toLowerCase(),
     template: tmpl
   });
 });
