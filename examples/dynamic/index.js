@@ -9,17 +9,25 @@ var box = new Pillbox({
   container: container
 });
 
-document.getElementById('tag-adder').onkeyup = function (e) {
+// polyfill for classlist in old IE
+require('./classlist');
+
+document.getElementById('tag-adder').onkeydown = function (e) {
+  // smooth over the way IE is weird about events
+  e = e || window.event;
+  var target = e.target || e.srcElement;
+
+  // when enter key is pressed, add a new pill
   if (e.key === "Enter" || e.keyCode === 13 || e.which === 13) {
-    // add a new pill
     box.addPill({
-      name: e.target.value,
-      value: e.target.value,
+      name: target.value,
+      value: target.value,
       template: tmpl
     });
 
     // and clear the input
-    e.target.value = "";
+    target.value = "";
+    e.preventDefault ? e.preventDefault() : e.returnValue = false;
   }
 };
 

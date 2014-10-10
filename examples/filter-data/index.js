@@ -3,7 +3,7 @@ var Pillbox = require('../..');
 var ListFilter = require('./listfilter');
 
 var tmpl = require('./pill.jade');
-var data = require('./data').foods.map(function (item) {
+var data = _.map(require('./data').foods, function (item) {
   return {
     key: item.name.toLowerCase(),
     value: item.name,
