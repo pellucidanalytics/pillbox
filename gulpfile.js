@@ -4,6 +4,7 @@ var eventStream = require("event-stream");
 var express = require("express");
 var fs = require("fs");
 var gulp = require("gulp");
+var gulpJSDoc = require("gulp-jsdoc");
 var gulpLiveReload = require("gulp-livereload");
 var gutil = require("gulp-util");
 var mochaPhantomJS = require("gulp-mocha-phantomjs");
@@ -43,7 +44,8 @@ var paths = {
   dist: {
     baseDir: "./dist",
     testDir: "./dist/test",
-    examplesDir: "./dist/examples"
+    examplesDir: "./dist/examples",
+    jsdocDir: "./dist/jsdoc"
   }
 };
 
@@ -78,13 +80,23 @@ function concatSubDirStreams(baseDir, createStream) {
 
 // TODO: need more tasks here
 
-gulp.task("styl-dist", function() {
+gulp.task("styl-lib", function() {
   gulp.src(paths.lib.stylMain)
     .pipe(stylus({ use: nib() }))
     .pipe(gulp.dest(paths.dist.baseDir));
 });
 
-gulp.task("dist", ["styl-dist"]);
+gulp.task("jsdoc-lib", function() {
+  return gulp.src([paths.lib.jsAll, "README.md"])
+    .pipe(gulpJSDoc(paths.dist.jsdocDir));
+});
+
+gulp.task("lib", ["styl-lib", "jsdoc-lib"]);
+
+gulp.task("watch-lib", ["lib"], function() {
+  gulp.watch(paths.lib.stylAll, ["styl-lib"]);
+  gulp.watch(paths.lib.jsAll, ["jsdoc-lib"]);
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 // example tasks
@@ -221,9 +233,9 @@ gulp.task("serve", function() {
 ////////////////////////////////////////////////////////////////////////////////
 
 gulp.task("default", function(cb) {
-  runSequence(
-    ['watch-test', 'watch-examples'],
-    'serve',
+  return runSequence(
+    ["watch-test", "watch-examples", "watch-lib"],
+    "serve",
     cb
   );
 });
