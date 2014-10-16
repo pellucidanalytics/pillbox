@@ -60,16 +60,16 @@ function checkButtonState() {
 box.on('pill:add', function () { checkButtonState(); });
 box.on('pill:remove', function () { checkButtonState(); });
 
-box.on('pill:request:remove', function (pill) {
-  box.removePill(pill.key);
+box.on('pill:request:remove', function (data) {
+  box.removePill(data.pill.key);
 });
 
-box.on('pill:click', function (pill) {
-  if (pill.hasState('active')) {
-    pill.removeState('active');
-    pill.setState('inactive');
+box.on('pill:click', function (data) {
+  if (data.pill.hasState('active')) {
+    data.pill.removeState('active');
+    data.pill.setState('inactive');
   } else {
-    pill.setState('active');
-    pill.removeState('inactive')
+    data.pill.setState('active');
+    data.pill.removeState('inactive')
   }
 });

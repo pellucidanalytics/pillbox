@@ -31,15 +31,15 @@ var foodList = new ListFilter({
 
 var activeTags = [];
 
-myPills.on('pill:click', function (pill) {
-  if (pill.hasState('active')) {
-    pill.removeState('active');
+myPills.on('pill:click', function (data) {
+  if (data.pill.hasState('active')) {
+    data.pill.removeState('active');
     _.remove(activeTags, function (tag) {
-      return tag === pill.value;
+      return tag === data.pill.value;
     });
   } else {
-    pill.setState('active');
-    activeTags.push(pill.value);
+    data.pill.setState('active');
+    activeTags.push(data.pill.value);
   }
 
   foodList.filterByTags(activeTags);

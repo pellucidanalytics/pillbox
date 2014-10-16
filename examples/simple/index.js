@@ -16,18 +16,18 @@ _.each(values, function (value) {
   });
 });
 
-simpleBox.on('pill:request:remove', function (pill) {
-  console.log('The following pill requested removal:', pill.value);
-  simpleBox.removePill(pill.key);
+simpleBox.on('pill:request:remove', function (data) {
+  console.log('The following pill requested removal:', data.pill.value);
+  simpleBox.removePill(data.pill.key);
 });
 
-simpleBox.on('pill:click', function (pill) {
-  if (pill.hasState('active')) {
-    pill.removeState('active');
-    pill.setState('inactive');
+simpleBox.on('pill:click', function (data) {
+  if (data.pill.hasState('active')) {
+    data.pill.removeState('active');
+    data.pill.setState('inactive');
   } else {
-    pill.setState('active');
-    pill.removeState('inactive')
+    data.pill.setState('active');
+    data.pill.removeState('inactive')
   }
 });
 
