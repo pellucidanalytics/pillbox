@@ -30,3 +30,11 @@ simpleBox.on('pill:click', function (pill) {
     pill.removeState('inactive')
   }
 });
+
+simpleBox.on('pill:state:add', function (data) {
+  console.log(data.pill.value, 'had the following state added:', data.state);
+});
+
+simpleBox.on('pill:state:remove', function (data) {
+  console.log(data.pill.value, 'had the following state removed:', data.state);
+});
