@@ -110,7 +110,7 @@ Pills emit several events:
 However, getting pill instances is a hassle, so all pill events are also forwarded through Pillbox with a `"pill:"` prefix. Instead of listening for `"request:remove"` on each pill instance:
 
 ```javascript
-_.each(pb.keys(). function (key) {
+_.each(pb.keys(), function (key) {
   pb.getPill(key).on('request:remove', function () {
     pb.removePill(key);
   });
