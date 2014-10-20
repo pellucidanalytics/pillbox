@@ -1,6 +1,7 @@
 {
-  "name": "pills",
-  "version": "0.0.0",
+  "name": "pillbox",
+  "title": "Pillbox.js",
+  "version": "1.0.0-beta1",
   "description": "Small library for creating lists of tags in containers.",
   "main": "index.js",
   "scripts": {
