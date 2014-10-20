@@ -8,6 +8,10 @@
     "build": "npm install && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pellucidanalytics/pillbox.git"
+  },
   "keywords": [
     "UI",
     "browser",
@@ -15,6 +19,10 @@
   ],
   "author": "Pellucid Analytics",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pellucidanalytics/pillbox/issues"
+  },
+  "homepage": "https://github.com/pellucidanalytics/pillbox",
   "dependencies": {
     "eventemitter2": "^0.4.14",
     "inherits": "^2.0.1",
