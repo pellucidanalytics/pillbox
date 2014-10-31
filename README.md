@@ -1,5 +1,7 @@
 # Pillbox.js
 
+[![Build Status](http://img.shields.io/travis/pellucidanalytics/pillbox.svg)](https://travis-ci.org/pellucidanalytics/pillbox)
+
 Pillbox.js is a UI container for your (optionally pill-styled) tag labels. The pillbox contains pills (tags), and each pill is aware of its state. Events are emitted whenever something interesting happens.
 
 ## Usage
