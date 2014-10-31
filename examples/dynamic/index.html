@@ -1,14 +1,16 @@
 <!doctype html>
 <html>
   <head>
-    <title>Simple Pills Demo</title>
+    <title>Dynamic Pills Demo</title>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <input type="text" placeholder="New tag name" id="tag-adder">
     <div class="tag-ribbon">
-      <ul class="is-collapsed"></ul>
+      <div class="wrapper is-collapsed">
+        <ul></ul>
+      </div>
       <button class="pillbox-toggle disabled"><i class="fa fa-caret-down"></i></button>
     </div>
     <script src="./bundle.js"></script>

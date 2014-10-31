@@ -2,7 +2,7 @@ var _ =  require('lodash');
 var Pillbox = require('../..');
 
 var tmpl = require('./pill.jade');
-var container = document.querySelector('.tag-ribbon > ul');
+var container = document.querySelector('.tag-ribbon ul');
 var toggler = document.querySelector('.pillbox-toggle');
 
 var box = new Pillbox({
@@ -36,25 +36,49 @@ var containerIsExpanded = false;
 toggler.onclick = function () {
   if (containerIsExpanded) {
     // if container is expanded, collapse
-    container.classList.remove('is-expanded');
-    container.classList.add('is-collapsed');
-    toggler.querySelector('.fa').classList.remove('fa-rotate-180');
-    containerIsExpanded = false;
+    collapseContainer();
   } else if (container.scrollHeight > container.offsetHeight) {
     // otherwise, if container is overflowed, expand
-    container.classList.remove('is-collapsed');
-    container.classList.add('is-expanded');
-    toggler.querySelector('.fa').classList.add('fa-rotate-180');
-    containerIsExpanded = true;
+    expandContainer();
   }
 };
 
+function expandContainer() {
+  container.parentNode.classList.remove('is-collapsed');
+  container.parentNode.classList.add('is-expanded');
+  toggler.querySelector('.fa').classList.add('fa-rotate-180');
+  containerIsExpanded = true;
+}
+
+function collapseContainer() {
+  container.parentNode.classList.remove('is-expanded');
+  container.parentNode.classList.add('is-collapsed');
+  toggler.querySelector('.fa').classList.remove('fa-rotate-180');
+  containerIsExpanded = false;
+}
+
 function checkButtonState() {
-  if (containerIsExpanded || container.scrollHeight > container.offsetHeight) {
+  console.info("container scroll: " + container.scrollHeight + " parent offset: " + container.parentNode.offsetHeight);
+  if (container.scrollHeight > container.parentNode.offsetHeight) {
     toggler.classList.remove('disabled');
+    if (! containerIsExpanded) expandContainer();
   } else {
+    if (container.scrollHeight == container.parentNode.offsetHeight) console.info("heights are equal");
+    else {
+      toggler.classList.add('disabled');
+      if (containerIsExpanded) collapseContainer();
+    }
+    
+  } 
+  /*if (containerIsExpanded) {
+    // if container is expanded
+    //|| container.scrollHeight > container.offsetHeight) {
+    console.info("container is expanded");
+    //toggler.classList.remove('disabled');
+  } else {
+    console.info("container is not expanded");
     toggler.classList.add('disabled');
-  }
+  }*/
 }
 
 box.on('pill:add', function () { checkButtonState(); });
