@@ -37,7 +37,7 @@ toggler.onclick = function () {
   if (containerIsExpanded) {
     // if container is expanded, collapse
     collapseContainer();
-  } else if (container.scrollHeight > container.offsetHeight) {
+  } else if (container.scrollHeight > container.parentNode.offsetHeight) {
     // otherwise, if container is overflowed, expand
     expandContainer();
   }
@@ -58,27 +58,15 @@ function collapseContainer() {
 }
 
 function checkButtonState() {
-  console.info("container scroll: " + container.scrollHeight + " parent offset: " + container.parentNode.offsetHeight);
   if (container.scrollHeight > container.parentNode.offsetHeight) {
     toggler.classList.remove('disabled');
     if (! containerIsExpanded) expandContainer();
   } else {
-    if (container.scrollHeight == container.parentNode.offsetHeight) console.info("heights are equal");
-    else {
+    if (container.scrollHeight !== container.parentNode.offsetHeight) {
       toggler.classList.add('disabled');
       if (containerIsExpanded) collapseContainer();
     }
-    
   } 
-  /*if (containerIsExpanded) {
-    // if container is expanded
-    //|| container.scrollHeight > container.offsetHeight) {
-    console.info("container is expanded");
-    //toggler.classList.remove('disabled');
-  } else {
-    console.info("container is not expanded");
-    toggler.classList.add('disabled');
-  }*/
 }
 
 box.on('pill:add', function () { checkButtonState(); });
