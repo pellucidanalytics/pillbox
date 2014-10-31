@@ -16,6 +16,8 @@ var myPills = new Pillbox({
   container: document.querySelector('.pill-tag-list')
 });
 
+var deletePills = 
+
 _.each(tags, function (value) {
   myPills.addPill({
     key: value.toLowerCase(),
@@ -43,4 +45,24 @@ myPills.on('pill:click', function (data) {
   }
 
   foodList.filterByTags(activeTags);
+});
+
+var deletedTags = [];
+
+myPills.on('pill:request:remove', function (data) {
+  if (data.pill.hasState('active')) {
+    data.pill.removeState('active');
+    _.remove(activeTags, function (tag) {
+      return tag === data.pill.value;
+    });
+  } 
+
+  deletedTags.push(data.pill.value);
+  
+  // don't respond to click
+  data.pill.off("click", data.pill._events.click);
+
+  foodList.filterNotByTags(deletedTags);
+  
+  myPills.removePill(data.pill.key);
 });
