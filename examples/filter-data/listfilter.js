@@ -53,6 +53,23 @@ _.extend(ListFilter.prototype, {
         this.showItem(key);
       }
     }, this);
+  },
+  filterNotByTags: function (tags) {
+    // show all tags if none are selected
+    if (!tags.length) {
+      this.showAll();
+      return;
+    }
+
+    _.each(this.items, function(item, key) {
+      if (_.isEmpty(_.intersection(item.tags, tags))) {
+        // show the item if none of it's tags match the given tags
+        this.showItem(key);
+      } else {
+        // otherwise, there was a match, so hide it
+        this.hideItem(key);
+      }
+    }, this);
   }
 });
 
