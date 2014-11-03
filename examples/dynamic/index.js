@@ -2,7 +2,7 @@ var _ =  require('lodash');
 var Pillbox = require('../..');
 
 var tmpl = require('./pill.jade');
-var container = document.querySelector('.tag-ribbon > ul');
+var container = document.querySelector('.tag-ribbon ul');
 var toggler = document.querySelector('.pillbox-toggle');
 
 var box = new Pillbox({
@@ -36,25 +36,37 @@ var containerIsExpanded = false;
 toggler.onclick = function () {
   if (containerIsExpanded) {
     // if container is expanded, collapse
-    container.classList.remove('is-expanded');
-    container.classList.add('is-collapsed');
-    toggler.querySelector('.fa').classList.remove('fa-rotate-180');
-    containerIsExpanded = false;
-  } else if (container.scrollHeight > container.offsetHeight) {
+    collapseContainer();
+  } else if (container.scrollHeight > container.parentNode.offsetHeight) {
     // otherwise, if container is overflowed, expand
-    container.classList.remove('is-collapsed');
-    container.classList.add('is-expanded');
-    toggler.querySelector('.fa').classList.add('fa-rotate-180');
-    containerIsExpanded = true;
+    expandContainer();
   }
 };
 
+function expandContainer() {
+  container.parentNode.classList.remove('is-collapsed');
+  container.parentNode.classList.add('is-expanded');
+  toggler.querySelector('.fa').classList.add('fa-rotate-180');
+  containerIsExpanded = true;
+}
+
+function collapseContainer() {
+  container.parentNode.classList.remove('is-expanded');
+  container.parentNode.classList.add('is-collapsed');
+  toggler.querySelector('.fa').classList.remove('fa-rotate-180');
+  containerIsExpanded = false;
+}
+
 function checkButtonState() {
-  if (containerIsExpanded || container.scrollHeight > container.offsetHeight) {
+  if (container.scrollHeight > container.parentNode.offsetHeight) {
     toggler.classList.remove('disabled');
+    if (! containerIsExpanded) expandContainer();
   } else {
-    toggler.classList.add('disabled');
-  }
+    if (container.scrollHeight !== container.parentNode.offsetHeight) {
+      toggler.classList.add('disabled');
+      if (containerIsExpanded) collapseContainer();
+    }
+  } 
 }
 
 box.on('pill:add', function () { checkButtonState(); });
