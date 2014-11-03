@@ -27,7 +27,11 @@ document.getElementById('tag-adder').onkeydown = function (e) {
 
     // and clear the input
     target.value = "";
-    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    if (e.preventDefault) {
+      e.preventDefault();
+    } else {
+      e.returnValue = false;
+    }
   }
 };
 
@@ -66,7 +70,7 @@ function checkButtonState() {
       toggler.classList.add('disabled');
       if (containerIsExpanded) collapseContainer();
     }
-  } 
+  }
 }
 
 box.on('pill:add', function () { checkButtonState(); });
@@ -82,6 +86,6 @@ box.on('pill:click', function (data) {
     data.pill.setState('inactive');
   } else {
     data.pill.setState('active');
-    data.pill.removeState('inactive')
+    data.pill.removeState('inactive');
   }
 });

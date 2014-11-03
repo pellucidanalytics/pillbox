@@ -8,15 +8,13 @@ var data = _.map(require('./data').foods, function (item) {
     key: item.name.toLowerCase(),
     value: item.name,
     tags: item.tags
-  }
+  };
 });
 var tags = _.uniq(_.flatten(_.pluck(data, 'tags')));
 
 var myPills = new Pillbox({
   container: document.querySelector('.pill-tag-list')
 });
-
-var deletePills = 
 
 _.each(tags, function (value) {
   myPills.addPill({
@@ -55,14 +53,14 @@ myPills.on('pill:request:remove', function (data) {
     _.remove(activeTags, function (tag) {
       return tag === data.pill.value;
     });
-  } 
+  }
 
   deletedTags.push(data.pill.value);
-  
+
   // don't respond to click
   data.pill.off("click", data.pill._events.click);
 
   foodList.filterNotByTags(deletedTags);
-  
+
   myPills.removePill(data.pill.key);
 });

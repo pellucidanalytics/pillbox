@@ -27,7 +27,7 @@ simpleBox.on('pill:click', function (data) {
     data.pill.setState('inactive');
   } else {
     data.pill.setState('active');
-    data.pill.removeState('inactive')
+    data.pill.removeState('inactive');
   }
 });
 
