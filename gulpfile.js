@@ -5,6 +5,7 @@ var express = require("express");
 var fs = require("fs");
 var gulp = require("gulp");
 var gulpJSDoc = require("gulp-jsdoc");
+var gulpJSHint = require("gulp-jshint");
 var gulpLiveReload = require("gulp-livereload");
 var gutil = require("gulp-util");
 var mochaPhantomJS = require("gulp-mocha-phantomjs");
@@ -74,6 +75,13 @@ function concatSubDirStreams(baseDir, createStream) {
   return eventStream.concat.apply(null, streams);
 }
 
+function runJSHint(sourcePath) {
+  return gulp.src(sourcePath)
+    .pipe(gulpJSHint())
+    .pipe(gulpJSHint.reporter("jshint-stylish"))
+    .pipe(gulpJSHint.reporter("fail"));
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // lib tasks
 ////////////////////////////////////////////////////////////////////////////////
@@ -86,16 +94,20 @@ gulp.task("styl-lib", function() {
     .pipe(gulp.dest(paths.dist.baseDir));
 });
 
+gulp.task("lib-jshint", function() {
+  return runJSHint(paths.lib.jsAll);
+});
+
 gulp.task("jsdoc-lib", function() {
   return gulp.src([paths.lib.jsAll, "README.md"])
     .pipe(gulpJSDoc(paths.dist.jsdocDir));
 });
 
-gulp.task("lib", ["styl-lib", "jsdoc-lib"]);
+gulp.task("lib", ["styl-lib", "lib-jshint", "jsdoc-lib"]);
 
 gulp.task("watch-lib", ["lib"], function() {
   gulp.watch(paths.lib.stylAll, ["styl-lib"]);
-  gulp.watch(paths.lib.jsAll, ["jsdoc-lib"]);
+  gulp.watch(paths.lib.jsAll, ["lib-jshint", "jsdoc-lib"]);
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +129,14 @@ gulp.task("styl-examples", function() {
   });
 });
 
+gulp.task("examples-jshint", function() {
+  return concatSubDirStreams(paths.examples.baseDir, function(dir) {
+    return runJSHint(
+      path.join(paths.examples.baseDir, dir, paths.examples.jsAll)
+    );
+  });
+});
+
 gulp.task("js-examples", function() {
   return concatSubDirStreams(paths.examples.baseDir, function(dir) {
     var indexjsPath = "./" + path.join(paths.examples.baseDir, dir, paths.examples.jsMain);
@@ -134,7 +154,7 @@ gulp.task("js-examples", function() {
   });
 });
 
-gulp.task("examples", ["html-examples", "styl-examples", "js-examples"]);
+gulp.task("examples", ["html-examples", "styl-examples", "examples-jshint", "js-examples"]);
 
 gulp.task('watch-examples', ['examples'], function () {
   var liveReload = gulpLiveReload();
@@ -186,6 +206,10 @@ gulp.task("styl-test", function() {
     .pipe(gulp.dest(paths.dist.testDir));
 });
 
+gulp.task("test-jshint", function() {
+  return runJSHint(paths.test.jsAll);
+});
+
 gulp.task("js-test", function() {
   return browserify(paths.test.jsMain)
     .bundle()
@@ -193,7 +217,7 @@ gulp.task("js-test", function() {
     .pipe(gulp.dest(paths.dist.testDir));
 });
 
-gulp.task("test", ["html-test", "styl-test", "js-test"], function() {
+gulp.task("test", ["html-test", "styl-test", "test-jshint", "js-test"], function() {
   return gulp.src(path.join(paths.dist.testDir, "index.html"))
     .pipe(mochaPhantomJS());
 });
@@ -202,6 +226,8 @@ gulp.task("watch-test", ["test"], function() {
   gulp.watch(paths.test.htmlAll, ["html-test"]);
 
   gulp.watch(paths.test.stylAll, ["styl-test"]);
+
+  gulp.watch(paths.test.jsAll, ["test-jshint"]);
 
   var bundler = watchify(browserify(paths.test.jsMain, watchify.args));
 
