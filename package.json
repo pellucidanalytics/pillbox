@@ -4,6 +4,9 @@
   "version": "1.0.0-beta1",
   "description": "Small library for creating lists of tags in containers.",
   "main": "index.js",
+  "browser": {
+    "lodash": "lodash/dist/lodash.compat.js"
+  },
   "scripts": {
     "build": "npm install && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,8 +27,7 @@
   },
   "homepage": "https://github.com/pellucidanalytics/pillbox",
   "dependencies": {
-    "eventemitter2": "^0.4.14",
-    "inherits": "^2.0.1",
+    "eventemitter3": "^0.1.5",
     "lodash": "^2.4.1"
   },
   "devDependencies": {
