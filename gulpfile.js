@@ -7,9 +7,10 @@ var gulp = require("gulp");
 var gulpJSDoc = require("gulp-jsdoc");
 var gulpJSHint = require("gulp-jshint");
 var gulpLiveReload = require("gulp-livereload");
+var gulpMochaPhantomJS = require("gulp-mocha-phantomjs");
 var gutil = require("gulp-util");
-var mochaPhantomJS = require("gulp-mocha-phantomjs");
 var nib = require("nib");
+var nodeNotifier = require("node-notifier");
 var path = require("path");
 var runSequence = require("run-sequence");
 var source = require("vinyl-source-stream");
@@ -75,11 +76,35 @@ function concatSubDirStreams(baseDir, createStream) {
   return eventStream.concat.apply(null, streams);
 }
 
+// Shows a Mac OSX notification with the given message
+function notify(message) {
+  nodeNotifier.notify({
+    title: "gulp - decks",
+    message: message
+  });
+}
+
 function runJSHint(sourcePath) {
   return gulp.src(sourcePath)
     .pipe(gulpJSHint())
     .pipe(gulpJSHint.reporter("jshint-stylish"))
     .pipe(gulpJSHint.reporter("fail"));
+}
+
+// Helper function to execute the phantom tests
+function runPhantomTests() {
+  var isFailed = false;
+  return gulp.src(path.join(paths.dist.testDir, "index.html"))
+    .pipe(gulpMochaPhantomJS())
+    .on("error", function() {
+      isFailed = true;
+      notify("Tests failed!");
+    })
+    .on("end", function() {
+      if (!isFailed) {
+        notify("Tests passed!");
+      }
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -218,8 +243,7 @@ gulp.task("js-test", function() {
 });
 
 gulp.task("test", ["html-test", "styl-test", "test-jshint", "js-test"], function() {
-  return gulp.src(path.join(paths.dist.testDir, "index.html"))
-    .pipe(mochaPhantomJS());
+  return runPhantomTests();
 });
 
 gulp.task("watch-test", ["test"], function() {

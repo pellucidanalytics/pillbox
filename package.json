@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "npm install && gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/gulp/bin/gulp.js test"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,10 @@
     "jade": "^1.7.0",
     "jadeify": "^2.6.0",
     "jshint-stylish": "^1.0.0",
+    "mocha": "^2.0.1",
+    "mocha-sauce": "0.0.3",
     "nib": "^1.0.4",
+    "node-notifier": "^4.0.2",
     "run-sequence": "^1.0.1",
     "sinon": "^1.10.3",
     "sinon-chai": "^2.6.0",
